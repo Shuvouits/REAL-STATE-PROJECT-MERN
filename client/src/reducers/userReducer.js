@@ -1,12 +1,12 @@
 import Cookies from "js-cookie";
 
-export function userReducer(
-  state = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null,
+const initialState = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null;
 
-  action
-) {
+export function userReducer(state = initialState, action) {
   switch (action.type) {
     case "LOGIN":
+      return action.payload;
+    case "GOOGLEAUTH":
       return action.payload;
     case "LOGOUT":
       return null;

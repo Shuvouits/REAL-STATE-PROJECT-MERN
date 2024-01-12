@@ -71,6 +71,49 @@ exports.signin = async(req,res)=> {
         })
 
     }catch(error){
+        res.status(500).json({
+            "message" : "Internal Server Problem"
+        })
 
+    }
+}
+
+exports.google = async(req,res)=> {
+    try{
+        const user= await User.findOne({email: req.body.email})
+        if(user){
+            const token = jwt.sign({id: user._id}, process.env.SECRET_KEY)
+            const {password: pass, ...rest} = user._doc;
+
+            return res.status(200).json({
+                email: user.email,
+                username: user.username,
+                token
+            })
+        }else{
+            const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
+            const hashPassword = bcrypt.hashSync(generatedPassword, 10);
+
+            const newUser = await new User({
+                username: req.body.name.split("").join("").toLowerCase() + Math.random().toString(36).slice(-4),
+                email: req.body.email,
+                password: hashPassword,
+                avatar: req.body.photo
+            }).save();
+
+            const token = jwt.sign({id: newUser._id}, process.env.SECRET_KEY);
+            return res.status(200).json({
+                email: newUser.email,
+                username: newUser.username,
+                token
+            })
+        }
+
+       
+
+    }catch(error){
+        res.status(500).json({
+            "message" : "Internal Server Problem"
+        })
     }
 }
