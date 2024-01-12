@@ -45,3 +45,32 @@ exports.signup = async(req,res)=>{
   
 
 }
+
+exports.signin = async(req,res)=> {
+    try{
+        const {email, password} = req.body;
+        const validUser = await User.findOne({email: email});
+        if(!validUser){
+            return res.status(401).json({
+                message: "Email is not found"
+            })
+        }
+        const validPassword = bcrypt.compareSync(password, validUser.password);
+        if(!validPassword){
+            return res.status(401).json({
+                message: "Incorrect Password"
+            })
+        } 
+
+        const token = jwt.sign({id: validUser._id}, process.env.SECRET_KEY)
+
+        return res.status(200).json({
+            email: validUser.email,
+            username: validUser.username,
+            token: token
+        })
+
+    }catch(error){
+
+    }
+}
