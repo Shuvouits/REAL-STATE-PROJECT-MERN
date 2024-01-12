@@ -38,7 +38,6 @@ export default function SignUp() {
       }
 
       if (res.status === 200) {
-        setError(data.message)
         setLoading(false)
         navigate('/sign-in')
       }
