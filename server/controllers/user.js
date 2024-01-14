@@ -67,6 +67,7 @@ exports.signin = async(req,res)=> {
         return res.status(200).json({
             email: validUser.email,
             username: validUser.username,
+            avatar: validUser.avatar,
             token: token
         })
 
@@ -88,6 +89,7 @@ exports.google = async(req,res)=> {
             return res.status(200).json({
                 email: user.email,
                 username: user.username,
+                avatar: user.avatar,
                 token
             })
         }else{
@@ -105,6 +107,7 @@ exports.google = async(req,res)=> {
             return res.status(200).json({
                 email: newUser.email,
                 username: newUser.username,
+                avatar: newUser.avatar,
                 token
             })
         }
