@@ -42,7 +42,7 @@ export default function SignIn() {
         dispatch({ type: "LOGIN", payload: userData });
         Cookies.set("user", JSON.stringify(userData));
         setLoading(false)
-        navigate('/')
+        navigate('/profile')
       }
 
 
