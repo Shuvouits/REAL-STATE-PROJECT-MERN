@@ -143,6 +143,40 @@ export default function Profile() {
 
   }
 
+  const handleSignOut = async(e)=>{
+    try{
+
+      const res = await fetch('/api/signout/', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`,
+        }
+      });
+
+      const data = await res.json();
+
+      if (res.status === 200) {
+        dispatch({ type: "LOGOUT", payload: null });
+        Cookies.set("user", null);
+        setLoading(false);
+        setSuccess(data.message);
+        navigate('/sign-in')
+      }
+
+
+    }catch(error){
+
+      if (error.status === 500) { 
+        setError("Internal Server Problem");
+      }
+      setLoading(false)
+
+    }
+
+
+  }
+
 
 
 
@@ -174,7 +208,7 @@ export default function Profile() {
 
       <div className='flex justify-between mt-5'>
         <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete account</span>
-        <span className='text-red-700 cursor-pointer'>Sign out</span>
+        <span onClick={handleSignOut} className='text-red-700 cursor-pointer'>Sign out</span>
 
       </div>
 

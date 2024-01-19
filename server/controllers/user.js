@@ -131,15 +131,15 @@ exports.updateUser = async (req, res) => {
         const token = tmp ? tmp.slice(7, tmp.length) : "";
 
         const userId = req.user.id;
-        
+
         const { username, email, password, avatar } = req.body;
         let cryptedPassword;
-        if(password){
+        if (password) {
             cryptedPassword = await bcrypt.hash(password, 12)
         }
-        
-        const updateUser = await User.findByIdAndUpdate(userId, { username, email, avatar, password:cryptedPassword }, { new: true })
-        
+
+        const updateUser = await User.findByIdAndUpdate(userId, { username, email, avatar, password: cryptedPassword }, { new: true })
+
         console.log(updateUser);
 
         if (!updateUser) {
@@ -153,9 +153,9 @@ exports.updateUser = async (req, res) => {
             avatar: updateUser.avatar,
             token: token,
             message: 'User information updated'
-        }) 
+        })
 
-    
+
 
 
     } catch (error) {
@@ -166,12 +166,12 @@ exports.updateUser = async (req, res) => {
     }
 }
 
-exports.deleteUser = async(req, res) => {
-    try{
+exports.deleteUser = async (req, res) => {
+    try {
 
-        if(req.user.id !== req.params.id){
+        if (req.user.id !== req.params.id) {
             return res.status(400).json({
-                "message" : "You are not authorized user"
+                "message": "You are not authorized user"
             })
         }
 
@@ -180,11 +180,30 @@ exports.deleteUser = async(req, res) => {
             "message": "User has been deleted"
         })
 
-    }catch(error){
+    } catch (error) {
 
         res.status(500).json({
             "message": "Internal Server Problem"
         })
 
     }
+}
+
+exports.signOut = async (req, res) => {
+    try {
+
+        let tmp = req.header("Authorization");
+        tmp = null
+        const token = tmp;
+        return res.status(200).json({
+            "message" : "User has been logged out"
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            "message": "Internal Server Problem"
+        })
+
+    }
+
 }
