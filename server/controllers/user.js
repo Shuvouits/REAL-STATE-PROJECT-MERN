@@ -165,3 +165,26 @@ exports.updateUser = async (req, res) => {
 
     }
 }
+
+exports.deleteUser = async(req, res) => {
+    try{
+
+        if(req.user.id !== req.params.id){
+            return res.status(400).json({
+                "message" : "You are not authorized user"
+            })
+        }
+
+        await User.findByIdAndDelete(req.params.id);
+        return res.status(200).json({
+            "message": "User has been deleted"
+        })
+
+    }catch(error){
+
+        res.status(500).json({
+            "message": "Internal Server Problem"
+        })
+
+    }
+}

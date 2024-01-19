@@ -10,6 +10,8 @@ export function userReducer(state = initialState, action) {
       return action.payload;
     case "UPDATE":
       return action.payload;
+    case "DELETE":
+      return null;
     case "LOGOUT":
       return null;
     case "VERIFY":

@@ -17,7 +17,22 @@ export default function Profile() {
   const [file, setFile] = useState(undefined)
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false)
-  const [formData, setFormData] = useState({});
+  //const [formData, setFormData] = useState({});
+
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+
+  useEffect(() => {
+    // Set initial values for username and email when the component mounts
+    setFormData({
+      username: user.username || '',
+      email: user.email || '',
+      password: '',
+    });
+  }, [user]);
 
 
   /* firebase Storage
@@ -26,6 +41,8 @@ export default function Profile() {
   request.resource.size < 2 * 1024 * 1024 && 
   request.resource.contentType.matches('image/.*') 
   */
+  
+
 
   useEffect(() => {
     if (file) {
@@ -61,6 +78,7 @@ export default function Profile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     console.log(formData)
     try {
       const res = await fetch(`/api/update/${user.id}`, {
@@ -87,8 +105,43 @@ export default function Profile() {
       if (error.status === 500) { // Fixed here
         setError("Internal Server Problem");
       }
+      setLoading(false)
     }
   };
+
+  const handleDeleteUser = async(e)=>{
+    try{
+
+      const res = await fetch(`/api/delete/${user.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`,
+        }
+      });
+
+      const data = await res.json();
+
+      if (res.status === 200) {
+        dispatch({ type: "DELETE", payload: null });
+        Cookies.set("user", null);
+        setLoading(false);
+        setSuccess(data.message);
+        navigate('/sign-in')
+      }
+
+
+    }catch(error){
+
+      if (error.status === 500) { 
+        setError("Internal Server Problem");
+      }
+      setLoading(false)
+
+    }
+
+
+  }
 
 
 
@@ -113,14 +166,14 @@ export default function Profile() {
           }
 
         </p>
-        <input type='text' placeholder='username' className='border p-3 rounded-lg' id='username' onChange={handleChange} />
-        <input type='email' placeholder='email' className='border p-3 rounded-lg' id='email' onChange={handleChange} />
-        <input type='password' placeholder='password' className='border p-3 rounded-lg' id='password' onChange={handleChange} />
-        <button className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>Update</button>
+        <input type='text' placeholder='username' className='border p-3 rounded-lg' id='username' onChange={handleChange} value={formData.username} />
+        <input type='email' placeholder='email' className='border p-3 rounded-lg' id='email' onChange={handleChange} value={formData.email}  />
+        <input type='password' placeholder='password' className='border p-3 rounded-lg' id='password' onChange={handleChange}  />
+        <button disabled={loading} className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Update'}</button>
       </form>
 
       <div className='flex justify-between mt-5'>
-        <span className='text-red-700 cursor-pointer'>Delete account</span>
+        <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete account</span>
         <span className='text-red-700 cursor-pointer'>Sign out</span>
 
       </div>
