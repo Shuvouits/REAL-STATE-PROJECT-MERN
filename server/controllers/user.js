@@ -254,4 +254,30 @@ exports.getUserListing = async (req, res) => {
         })
 
     }
+}  
+
+exports.deleteListing = async (req, res) => {
+    try {
+
+        const listing = await Listing.find({ _id: req.params.id }, {userRef: req.user.id});
+
+        if(!listing){
+            return res.status(401).json({
+                "message" : "Listing not found!"
+            })
+        }else{
+            await Listing.findByIdAndDelete(req.params.id);
+            res.status(200).json({
+                "message" : "Listing deleted successfully"
+            })
+        }
+        
+
+    } catch (error) {
+        res.status(500).json({
+            "message": "Internal Server Problem"
+        })
+
+    }
 }
+

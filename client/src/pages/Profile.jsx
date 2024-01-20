@@ -200,6 +200,36 @@ export default function Profile() {
 
   }
 
+  const handleListingDelete = async(listingId) => {
+
+    try{
+
+      const res = await fetch(`/api/delete/${listingId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`,
+        }
+      });
+
+      const data = await res.json();
+      if(res.status === 200){
+        setSuccess('Listing deleted successfully')
+      }
+
+      setUserListing( (prev) => prev.filter((listing) => listing._id !== listingId) );
+
+    }catch(error){
+
+      if(res.status===500){
+        setError("Internal Server Problem")
+      }
+
+    }
+    
+
+  }
+
 
 
 
@@ -238,7 +268,7 @@ export default function Profile() {
 
       <div className='text-center'>
         <p className='text-red-700 font-bold'>{error}</p>
-        <p className='text-green-700 font-bold'>{success}</p>
+       
       </div>
 
       <button onClick={handleShowListing} className='text-green-700 w-full text-center font-bold'>Show Listing</button>
@@ -258,7 +288,7 @@ export default function Profile() {
               </Link>
 
               <div className='flex flex-col item-center gap-2'>
-                <button className='text-red-700 uppercase font-semibold'>Delete</button>
+                <button onClick={() => handleListingDelete(listing._id)} className='text-red-700 uppercase font-semibold'>Delete</button>
                 <button className='text-green-700 uppercase font-semibold'>Edit</button>
 
               </div>
@@ -268,6 +298,11 @@ export default function Profile() {
           ))}
         </div>
       )}
+
+      <div className='text-center mt-2'>
+        
+        <p className='text-green-700 font-bold'>{success}</p>
+      </div>
 
     </div>
   )
