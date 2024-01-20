@@ -212,7 +212,7 @@ exports.signOut = async (req, res) => {
 exports.listingRouter = async (req, res) => {
     try {
 
-        const{name, description, address, regularPrice, discountPrice, bathrooms, bedrooms, furnished, parking, type, offer, imageUrls, userRef} = req.body
+        const { name, description, address, regularPrice, discountPrice, bathrooms, bedrooms, furnished, parking, type, offer, imageUrls, userRef } = req.body
 
         const listing = await new Listing({
             name,
@@ -230,9 +230,23 @@ exports.listingRouter = async (req, res) => {
             userRef
 
         }).save();
-        
+
         console.log('request done')
         return res.status(200).json(listing);
+
+    } catch (error) {
+        res.status(500).json({
+            "message": "Internal Server Problem"
+        })
+
+    }
+}
+
+exports.getUserListing = async (req, res) => {
+    try {
+        const id = req.user.id;
+        const listing = await Listing.find({ userRef: id });
+        res.status(200).json(listing)
 
     } catch (error) {
         res.status(500).json({
