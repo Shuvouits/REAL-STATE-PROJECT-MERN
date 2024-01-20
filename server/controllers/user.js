@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const jwt = require("jsonwebtoken")
-const User = require('../models/user.js')
+const User = require('../models/user.js');
+const Listing = require('../models/listing.js');
 
 exports.signup = async (req, res) => {
 
@@ -196,7 +197,7 @@ exports.signOut = async (req, res) => {
         tmp = null
         const token = tmp;
         return res.status(200).json({
-            "message" : "User has been logged out"
+            "message": "User has been logged out"
         })
 
     } catch (error) {
@@ -206,4 +207,37 @@ exports.signOut = async (req, res) => {
 
     }
 
+}
+
+exports.listingRouter = async (req, res) => {
+    try {
+
+        const{name, description, address, regularPrice, discountPrice, bathrooms, bedrooms, furnished, parking, type, offer, imageUrls, userRef} = req.body
+
+        const listing = await new Listing({
+            name,
+            description,
+            address,
+            regularPrice,
+            discountPrice,
+            bathrooms,
+            bedrooms,
+            furnished,
+            parking,
+            type,
+            offer,
+            imageUrls,
+            userRef
+
+        }).save();
+        
+        console.log('request done')
+        return res.status(200).json(listing);
+
+    } catch (error) {
+        res.status(500).json({
+            "message": "Internal Server Problem"
+        })
+
+    }
 }

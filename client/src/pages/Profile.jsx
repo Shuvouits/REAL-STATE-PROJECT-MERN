@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import { app } from '../firebase'
 import Cookies from 'js-cookie'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 export default function Profile() {
@@ -204,6 +204,7 @@ export default function Profile() {
         <input type='email' placeholder='email' className='border p-3 rounded-lg' id='email' onChange={handleChange} value={formData.email}  />
         <input type='password' placeholder='password' className='border p-3 rounded-lg' id='password' onChange={handleChange}  />
         <button disabled={loading} className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Update'}</button>
+        <Link to={"/create-listing"} className='bg-green-700 text-white p-3 text-center'>CREATE LISTING</Link>
       </form>
 
       <div className='flex justify-between mt-5'>
