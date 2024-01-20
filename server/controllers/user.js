@@ -259,7 +259,7 @@ exports.getUserListing = async (req, res) => {
 exports.deleteListing = async (req, res) => {
     try {
 
-        const listing = await Listing.find({ _id: req.params.id }, {userRef: req.user.id});
+        const listing = await Listing.findById(req.params.id);
 
         if(!listing){
             return res.status(401).json({
@@ -270,6 +270,29 @@ exports.deleteListing = async (req, res) => {
             res.status(200).json({
                 "message" : "Listing deleted successfully"
             })
+        }
+        
+
+    } catch (error) {
+        res.status(500).json({
+            "message": "Internal Server Problem"
+        })
+
+    }
+}
+
+exports.editListing = async (req, res) => {
+    try {
+
+        const listing = await Listing.findById(req.params.id);
+        
+        if(!listing){
+            return res.status(401).json({
+                "message" : "Listing not found!"
+            })
+        }else{
+            const data = await Listing.findByIdAndUpdate(req.params.id, req.body, {new: true} );
+            res.status(200).json(data)
         }
         
 
