@@ -1,5 +1,5 @@
 const express = require('express')
-const{signup, signin, google, updateUser, deleteUser, signOut, listingRouter, getUserListing, deleteListing, editListing, getListing} = require('../controllers/user.js')
+const{signup, signin, google, updateUser, deleteUser, signOut, listingRouter, getUserListing, deleteListing, editListing, getListing, getUser, filterListing} = require('../controllers/user.js')
 const {authUser} = require('../middleware/auth.js')
 const router = express.Router();
 
@@ -15,4 +15,6 @@ router.get('/api/listing/:id', authUser, getUserListing);
 router.get('/api/delete/:id', authUser, deleteListing);
 router.post('/api/update-listing/:id', authUser, editListing);
 router.get('/api/get-listing/:id', getListing);
+router.get('/api/user/:id',  getUser);
+router.get('/api/filter-list', filterListing);
 module.exports = router;
