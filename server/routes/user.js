@@ -16,5 +16,5 @@ router.get('/api/delete/:id', authUser, deleteListing);
 router.post('/api/update-listing/:id', authUser, editListing);
 router.get('/api/get-listing/:id', getListing);
 router.get('/api/user/:id',  getUser);
-router.get('/api/filter-list', filterListing);
+router.get('/api/filter-list/get', filterListing);
 module.exports = router;
