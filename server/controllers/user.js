@@ -304,3 +304,24 @@ exports.editListing = async (req, res) => {
     }
 }
 
+exports.getListing = async (req, res) => {
+    try{
+
+        const listing = await Listing.findById(req.params.id)
+
+        if(!listing){
+            return res.status(401).json({
+                "message": "Listing Not Found"
+            })
+        }
+
+        return res.status(200).json(listing);
+
+    }catch(error){
+        res.status(500).json({
+            "message": "Internal Server Problem"
+        })
+
+    }
+}
+

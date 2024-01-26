@@ -41,7 +41,7 @@ export default function Profile() {
   request.resource.size < 2 * 1024 * 1024 && 
   request.resource.contentType.matches('image/.*') 
   */
-  
+
 
 
   useEffect(() => {
@@ -109,8 +109,8 @@ export default function Profile() {
     }
   };
 
-  const handleDeleteUser = async(e)=>{
-    try{
+  const handleDeleteUser = async (e) => {
+    try {
 
       const res = await fetch(`/api/delete/${user.id}`, {
         method: 'DELETE',
@@ -131,9 +131,9 @@ export default function Profile() {
       }
 
 
-    }catch(error){
+    } catch (error) {
 
-      if (error.status === 500) { 
+      if (error.status === 500) {
         setError("Internal Server Problem");
       }
       setLoading(false)
@@ -143,8 +143,8 @@ export default function Profile() {
 
   }
 
-  const handleSignOut = async(e)=>{
-    try{
+  const handleSignOut = async (e) => {
+    try {
 
       const res = await fetch('/api/signout/', {
         method: 'GET',
@@ -165,9 +165,9 @@ export default function Profile() {
       }
 
 
-    }catch(error){
+    } catch (error) {
 
-      if (error.status === 500) { 
+      if (error.status === 500) {
         setError("Internal Server Problem");
       }
       setLoading(false)
@@ -177,8 +177,8 @@ export default function Profile() {
 
   }
 
-  const handleShowListing = async() => {
-    try{
+  const handleShowListing = async () => {
+    try {
 
       const res = await fetch(`/api/listing/${user.id}`, {
         method: 'GET',
@@ -192,17 +192,17 @@ export default function Profile() {
       setUserListing(data);
 
 
-    }catch(error){
-      if(res.status===500){
+    } catch (error) {
+      if (res.status === 500) {
         setError("Internal Server Problem")
       }
     }
 
   }
 
-  const handleListingDelete = async(listingId) => {
+  const handleListingDelete = async (listingId) => {
 
-    try{
+    try {
 
       const res = await fetch(`/api/delete/${listingId}`, {
         method: 'GET',
@@ -213,20 +213,20 @@ export default function Profile() {
       });
 
       const data = await res.json();
-      if(res.status === 200){
+      if (res.status === 200) {
         setSuccess('Listing deleted successfully')
       }
 
-      setUserListing( (prev) => prev.filter((listing) => listing._id !== listingId) );
+      setUserListing((prev) => prev.filter((listing) => listing._id !== listingId));
 
-    }catch(error){
+    } catch (error) {
 
-      if(res.status===500){
+      if (res.status === 500) {
         setError("Internal Server Problem")
       }
 
     }
-    
+
 
   }
 
@@ -254,8 +254,8 @@ export default function Profile() {
 
         </p>
         <input type='text' placeholder='username' className='border p-3 rounded-lg' id='username' onChange={handleChange} value={formData.username} />
-        <input type='email' placeholder='email' className='border p-3 rounded-lg' id='email' onChange={handleChange} value={formData.email}  />
-        <input type='password' placeholder='password' className='border p-3 rounded-lg' id='password' onChange={handleChange}  />
+        <input type='email' placeholder='email' className='border p-3 rounded-lg' id='email' onChange={handleChange} value={formData.email} />
+        <input type='password' placeholder='password' className='border p-3 rounded-lg' id='password' onChange={handleChange} />
         <button disabled={loading} className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>{loading ? 'Loading...' : 'Update'}</button>
         <Link to={"/create-listing"} className='bg-green-700 text-white p-3 text-center'>CREATE LISTING</Link>
       </form>
@@ -268,7 +268,7 @@ export default function Profile() {
 
       <div className='text-center'>
         <p className='text-red-700 font-bold'>{error}</p>
-       
+
       </div>
 
       <button onClick={handleShowListing} className='text-green-700 w-full text-center font-bold'>Show Listing</button>
@@ -289,8 +289,9 @@ export default function Profile() {
 
               <div className='flex flex-col item-center gap-2'>
                 <button onClick={() => handleListingDelete(listing._id)} className='text-red-700 uppercase font-semibold'>Delete</button>
-                <button className='text-green-700 uppercase font-semibold'>Edit</button>
-
+                <Link to={`/update-listing/${listing._id}`}>
+                  <button className='text-green-700 uppercase font-semibold'>Edit</button>
+                </Link>
               </div>
 
             </div>
@@ -300,7 +301,7 @@ export default function Profile() {
       )}
 
       <div className='text-center mt-2'>
-        
+
         <p className='text-green-700 font-bold'>{success}</p>
       </div>
 
