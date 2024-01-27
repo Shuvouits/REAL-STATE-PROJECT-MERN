@@ -373,6 +373,8 @@ exports.filterListing = async (req,res) => {
         if (type === undefined || type === 'all') {
           type = { $in: ['sale', 'rent'] };
         }
+
+        
     
         const searchTerm = req.query.searchTerm || '';
     
@@ -385,7 +387,7 @@ exports.filterListing = async (req,res) => {
           offer,
           furnished,
           parking,
-          type,
+          type : type,
         })
           .sort({ [sort]: order })
           .limit(limit)

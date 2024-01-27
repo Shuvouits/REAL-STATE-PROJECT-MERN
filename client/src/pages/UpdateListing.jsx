@@ -114,7 +114,7 @@ export default function UpdateListing() {
     }
 
     const handleChange = (e) => {
-        if (e.target.id === 'sell' || e.target.id === 'rent') {
+        if (e.target.id === 'sale' || e.target.id === 'rent') {
             setFormData({
                 ...formData,
                 type: e.target.id
@@ -199,8 +199,8 @@ export default function UpdateListing() {
 
                     <div className=' flex gap-6 flex-wrap'>
                         <div className='flex gap-2'>
-                            <input onChange={handleChange} checked={formData.type === 'sell'} type='checkbox' id='sell' className='w-5' />
-                            <span>Sell</span>
+                            <input onChange={handleChange} checked={formData.type === 'sale'} type='checkbox' id='sale' className='w-5' />
+                            <span>Sale</span>
                         </div>
                         <div className='flex gap-2'>
                             <input onChange={handleChange} checked={formData.type === 'rent'} type='checkbox' id='rent' className='w-5' />
