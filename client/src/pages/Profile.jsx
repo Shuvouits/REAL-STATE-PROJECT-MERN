@@ -81,7 +81,7 @@ export default function Profile() {
     setLoading(true)
     console.log(formData)
     try {
-      const res = await fetch(`/api/update/${user.id}`, {
+      const res = await fetch(`https://real-state-backend-rest-api.onrender.com/api/update/${user.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ export default function Profile() {
   const handleDeleteUser = async (e) => {
     try {
 
-      const res = await fetch(`/api/delete/${user.id}`, {
+      const res = await fetch(`https://real-state-backend-rest-api.onrender.com/api/delete/${user.id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ export default function Profile() {
   const handleSignOut = async (e) => {
     try {
 
-      const res = await fetch('/api/signout/', {
+      const res = await fetch('https://real-state-backend-rest-api.onrender.com/api/signout/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -180,7 +180,7 @@ export default function Profile() {
   const handleShowListing = async () => {
     try {
 
-      const res = await fetch(`/api/listing/${user.id}`, {
+      const res = await fetch(`https://real-state-backend-rest-api.onrender.com/api/listing/${user.id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ export default function Profile() {
 
     try {
 
-      const res = await fetch(`/api/delete/${listingId}`, {
+      const res = await fetch(`https://real-state-backend-rest-api.onrender.com/api/delete/${listingId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

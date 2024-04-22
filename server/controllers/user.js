@@ -231,7 +231,6 @@ exports.listingRouter = async (req, res) => {
 
         }).save();
 
-        console.log('request done')
         return res.status(200).json(listing);
 
     } catch (error) {
@@ -329,6 +328,8 @@ exports.getUser = async (req, res) => {
     try{
         const user = await User.findById(req.params.id);
 
+        res.send(user)
+
         if(!user){
             return res.status(401).json({
                 "message" : "User Not Found"
@@ -339,6 +340,7 @@ exports.getUser = async (req, res) => {
         return res.status(200).json(rest);
 
     }catch(error){
+        
         return res.status(500).json({
             "message" : "Internal Server Error"
         })

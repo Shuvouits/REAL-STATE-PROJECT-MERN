@@ -130,7 +130,7 @@ export default function CreateListing() {
             setLoading(true);
             setError(false)
 
-            const res = await fetch('/api/listing', {
+            const res = await fetch('https://real-state-backend-rest-api.onrender.com/api/listing', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

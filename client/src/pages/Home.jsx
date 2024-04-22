@@ -19,7 +19,7 @@ export default function Home() {
 
     const fetchOfferListings = async () => {
       try {
-        const res = await fetch('/api/filter-list/get?offer=true&limit=4');
+        const res = await fetch('https://real-state-backend-rest-api.onrender.com/api/filter-list/get?offer=true&limit=4');
         const data = await res.json();
         setOfferListings(data);
         fetchRentListings();
@@ -32,7 +32,7 @@ export default function Home() {
 
     const fetchRentListings = async () => {
       try {
-        const res = await fetch('/api/filter-list/get?type=rent&limit=4');
+        const res = await fetch('https://real-state-backend-rest-api.onrender.com/api/filter-list/get?type=rent&limit=4');
         const data = await res.json();
         setRentListings(data);
         fetchSaleListings();
@@ -43,7 +43,7 @@ export default function Home() {
 
     const fetchSaleListings = async () => {
       try {
-        const res = await fetch('/api/filter-list/get?type=sale&limit=4');
+        const res = await fetch('https://real-state-backend-rest-api.onrender.com/api/filter-list/get?type=sale&limit=4');
         const data = await res.json();
         setSaleListings(data);
       } catch (error) {

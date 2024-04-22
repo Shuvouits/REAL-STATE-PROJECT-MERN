@@ -22,7 +22,7 @@ export default function Listing() {
         const fetchListing = async () => {
             try {
                 setLoading(true);
-                const res = await fetch(`/api/get-listing/${params.listingId}`);
+                const res = await fetch(`https://real-state-backend-rest-api.onrender.com/api/get-listing/${params.listingId}`);
                 const data = await res.json();
                 if (data.success === false) {
                     setError(true);

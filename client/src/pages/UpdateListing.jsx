@@ -66,7 +66,7 @@ export default function UpdateListing() {
     useEffect(() => {
       const fetchListing = async () => {
         const listingId = params.listingId;
-        const res = await fetch(`/api/get-listing/${listingId}`);
+        const res = await fetch(`https://real-state-backend-rest-api.onrender.com/${listingId}`);
         const data = await res.json();
     
         if (res.status === 200) {
@@ -152,7 +152,7 @@ export default function UpdateListing() {
             setLoading(true);
             setError(false)
 
-            const res = await fetch(`/api/update-listing/${params.listingId}`, {
+            const res = await fetch(`https://real-state-backend-rest-api.onrender.com/api/update-listing/${params.listingId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

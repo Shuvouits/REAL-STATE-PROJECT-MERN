@@ -26,7 +26,7 @@ export default function SignIn() {
 
       e.preventDefault();
       setLoading(true)
-      const res = await fetch('/api/signin', {
+      const res = await fetch('https://real-state-backend-rest-api.onrender.com/api/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
