@@ -19,6 +19,7 @@
     "react-icons": "^5.0.0",
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.21.1",
+    "react-spinners": "^0.13.8",
     "redux": "^5.0.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",

@@ -6,12 +6,14 @@ import { Navigation } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import ListingItem from '../component/ListingItem';
+import Loader from '../component/Loader';
 
 export default function Home() {
 
   const [offerListings, setOfferListings] = useState([]);
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
+  const [loading, setLoading] = useState(true)
   SwiperCore.use([Navigation]);
   console.log(offerListings);
 
@@ -23,6 +25,8 @@ export default function Home() {
         const data = await res.json();
         setOfferListings(data);
         fetchRentListings();
+
+        setLoading(false)
 
       } catch (error) {
         console.log(error)
@@ -56,6 +60,18 @@ export default function Home() {
   }, [])
   return (
     <>
+
+    {loading && (
+
+<div style={{position: 'absolute', top: '50%', left: '50%'}}>
+<Loader />
+</div>
+
+    )}
+
+      
+
+      <div style={{opacity : `${loading ? '0.4' : ''}`}}>
 
       <Swiper navigation>
         {offerListings &&
@@ -144,6 +160,12 @@ export default function Home() {
 
 
       </div>
+
+
+      </div>
+
+    
+     
 
     </>
   )
